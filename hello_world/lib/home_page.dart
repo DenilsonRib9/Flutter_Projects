@@ -1,115 +1,88 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/app_controller.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  State<HomePage> createState() {
-    return HomePageState();
-  }
-}
+import 'home_controller.dart';
 
-class HomePageState extends State<HomePage> {
-  int counter = 0;
+/*
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var controller = HomeController.of(context);
+    final size = MediaQuery.of(context).size;
+    final navigation = Navigator.of(context);
+    final theme = Theme.of(context);
+
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: ClipRRect(
-                borderRadius: BorderRadius.circular(40),
-                child: Image.network(
-                  'http://t1.gstatic.com/licensed-image?q=tbn:ANd9GcRPZ2tvFGakwR90KAZKxvuLtWnv5rvbznVYIoijWb_cSYxFwG3XXGlnnr5Azt2h3Mb4Oyyqn7WnO_ebiwWWQ3c',
-                ),
-              ),
-              accountName: Text('Denilson Ribeiro'),
-              accountEmail: Text('denilsonrib9@gmail.'),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Início'),
-              subtitle: Text('tela de início'),
-              onTap: () {
-                print('Home');
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Logout'),
-              subtitle: Text('Finalizar sessão'),
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed('/');
-              },
-            )
-          ],
-        ),
-      ),
       appBar: AppBar(
-        title: Text('HomePage'),
-        actions: [
-          CustomSwitch(),
-        ],
+        title: const Text("Home"),
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Contador: $counter'),
-            Container(
-              height: 10,
-            ),
-            CustomSwitch(),
-            Container(
-              height: 50,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.black,
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.black,
-                ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  color: Colors.black,
-                ),
-              ],
-            ),
-          ],
-        ),
+      body: Center(
+        child: Text('Flutterando ${controller.value}'),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
-          setState(() {
-            counter++;
-          });
+          controller.increment();
         },
       ),
     );
   }
 }
+*/
 
-class CustomSwitch extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = TextEditingController();
+
+  final list = <String>[];
+
   @override
   Widget build(BuildContext context) {
-    return Switch(
-      value: AppController.instance.isDarkTheme,
-      onChanged: (value) {
-        AppController.instance.changeTheme();
-      },
+    return Scaffold(
+      body: Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  'assets/imgs/background.jpg',
+                  fit: BoxFit.cover,
+                )),
+            Container(
+              color: Colors.black.withOpacity(0.4),
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const FlutterLogo(
+                    size: 150,
+                    textColor: Colors.white,
+                    style: FlutterLogoStyle.horizontal,
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Entrar no app'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
